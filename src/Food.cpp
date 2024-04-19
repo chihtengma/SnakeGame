@@ -1,8 +1,6 @@
 #include "../include/Food.h"
 #include "../include/Config.h"
 
-Color darkGreen = {43, 51, 24, 255};
-
 Food::Food() {
     Image image = LoadImage("../assets/Graphics/food.png"); // Path to the food image
     texture = LoadTextureFromImage(image);
@@ -15,13 +13,13 @@ Food::~Food() {
 }
 
 void Food::Draw() {
-    DrawTexture(texture, static_cast<int>(position.x * static_cast<float>(cellSize)),
-                static_cast<int>(position.y * static_cast<float>(cellSize)), darkGreen);
+    DrawTexture(texture, static_cast<int>(position.x * static_cast<float>(Config::cellSize)),
+                static_cast<int>(position.y * static_cast<float>(Config::cellSize)), Config::darkGreen);
 }
 
 Vector2 Food::GenerateRandomPos() {
-    int gridX = GetRandomValue(0, cellCount - 1);   // Get random grid cell x-coordinate
-    int gridY = GetRandomValue(0, cellCount - 1);   // Get random grid cell y-coordinate
+    int gridX = GetRandomValue(0, Config::cellCount - 1);   // Get random grid cell x-coordinate
+    int gridY = GetRandomValue(0, Config::cellCount - 1);   // Get random grid cell y-coordinate
 
     return Vector2{
             static_cast<float>(gridX),   // Convert grid cell coordinate to pixel coordinate

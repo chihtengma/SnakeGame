@@ -6,8 +6,7 @@
 
 class Game {
 public:
-    Snake snake;
-    Food food;
+
 
     Game();
 
@@ -18,6 +17,15 @@ public:
     void Update();
 
     Vector2 GenerateValidFoodPosition();
+
+    // Accessor
+    Snake &GetSnake() { return snake; };
+
+    Food &GetFood() { return food; };
+
+private:
+    Snake snake;
+    Food food;
 };
 
 #endif //GAME_H

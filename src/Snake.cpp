@@ -20,9 +20,9 @@ void Snake::Draw() {
         int x = static_cast<int>(i.x);
         int y = static_cast<int>(i.y);
 
-        Rectangle segment = Rectangle{static_cast<float>(x * cellSize), static_cast<float>(y * cellSize), static_cast<float>(cellSize),
-                                      static_cast<float>(cellSize)};
-        DrawRectangleRounded(segment, 0.5, 6, darkGreen);
+        Rectangle segment = Rectangle{static_cast<float>(x * Config::cellSize), static_cast<float>(y * Config::cellSize), static_cast<float>(Config::cellSize),
+                                      static_cast<float>(Config::cellSize)};
+        DrawRectangleRounded(segment, 0.5, 6, Config::darkGreen);
     }
 }
 
