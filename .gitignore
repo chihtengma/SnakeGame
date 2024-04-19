@@ -1,0 +1,53 @@
+### CLion ###
+.idea/
+*.iml
+cmake-build-*/
+
+### C++ ###
+# Object files
+*.o
+*.obj
+*.tmp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.dylib
+*.so
+
+# Static libraries
+*.lib
+*.a
+*.la
+
+# Binary and Executable files
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+### macOS-specific ###
+.DS_Store
+.AppleDouble
+.LSOverride
+.DocumentRevisions-V100
+.Trashes
+*.DS_Store?
+._*
+
+
+### Logs ###
+*.log
+
+### raylib specific ###
+# If you're including raylib build artifacts
+bin/
+obj/
+temp/
