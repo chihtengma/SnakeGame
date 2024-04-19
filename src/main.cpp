@@ -8,10 +8,6 @@
     - Green {173, 204, 96, 255}
     - Dark Green {43, 51, 24, 255}
  */
-int cellCount = 30;
-int cellSize = 30;
-
-Color green = {173, 204, 96, 255};
 
 // Handling snake's direction based on user input
 void HandleInput(Snake &snake) {
@@ -32,7 +28,7 @@ int main() {
     // Initialization
     //--------------------------------------------------------------------------------------
 
-    InitWindow(cellSize * cellCount, cellSize * cellCount, "Retro Snake Game");
+    InitWindow(Config::cellSize * Config::cellCount, Config::cellSize * Config::cellCount, "Retro Snake Game");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -49,15 +45,15 @@ int main() {
 
         // Update
         //----------------------------------------------------------------------------------
-        if (game.snake.EventTriggered(0.2)) {
+        if (game.GetSnake().EventTriggered(0.2)) {
             game.Update();
         }
 
         // Handle snake's direction
-        HandleInput(game.snake);
+        HandleInput(game.GetSnake());
 
         // Drawing
-        ClearBackground(green);
+        ClearBackground(Config::green);
         game.Draw();
 
         EndDrawing();
