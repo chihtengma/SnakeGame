@@ -5,14 +5,14 @@
 
 class Food {
 public:
-    Vector2 position;   // Stores the top-left corner position of the food texture in pixels
-    Texture2D texture;
+    Vector2 position{};   // Stores the top-left corner position of the food texture in pixels
+    Texture2D texture{};
 
     Food();
 
     ~Food();
 
-    void Draw();
+    void Draw() const;
 
     Vector2 GenerateRandomPos();
 };
