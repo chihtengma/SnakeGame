@@ -25,7 +25,9 @@ public:
 
     void CheckCollisionWithFood();
 
-    void CheckCollisionWithBoundaries();
+    bool CheckCollisionWithBoundaries();
+
+    bool CheckCollisionWithTail();
 
     void HandleUserInput(Game &);
 

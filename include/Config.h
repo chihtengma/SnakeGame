@@ -4,6 +4,7 @@
 namespace Config {
     constexpr int cellSize = 30;
     constexpr int cellCount = 30;
+    constexpr int offSet = 75;
 
     constexpr Color green = {173, 204, 96, 255};
     constexpr Color darkGreen = {43, 51, 24, 255};

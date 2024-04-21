@@ -7,7 +7,7 @@
 class Snake {
 public:
     std::deque<Vector2> body;
-    Vector2 direction;
+    Vector2 direction{};
 
     double lastUpdateTime;
 

@@ -10,13 +10,15 @@ Game::~Game() = default;
 void Game::Draw() {
     BeginDrawing();
     ClearBackground(Config::green);
+    DrawRectangleLinesEx(Rectangle{(float)Config::offSet - 5, (float)Config::offSet - 5, (float)Config::cellSize * Config::cellCount + 10,
+                                   (float)Config::cellSize * Config::cellCount + 10}, 5, Config::darkGreen);
 
     if (currentState == GameState::Playing) {
         snake.Draw();
         food.Draw();
     } else if (currentState == GameState::GameOver) {
-        DrawText("Game Over!", 360, 400, 30, RED);
-        DrawText("Press [R] to Replay or [Q] to Quit", 200, 450, 30, DARKGRAY);
+        DrawText("Game Over!", 420, 450, 30, RED);
+        DrawText("Press [R] to Replay or [Q] to Quit", 260, 500, 30, DARKGRAY);
     }
 
     EndDrawing();
@@ -58,13 +60,28 @@ void Game::CheckCollisionWithFood() {
 }
 
 // Check if the snake hits the boundaries
-void Game::CheckCollisionWithBoundaries() {
+bool Game::CheckCollisionWithBoundaries() {
     Vector2 head = snake.body.front();
 
     if (head.x < 0 || head.x >= Config::cellCount ||
         head.y < 0 || head.y >= Config::cellCount) {
         currentState = GameState::GameOver;
+        return true;
     }
+    return false;
+}
+
+// Check if the snake hits the tail
+bool Game::CheckCollisionWithTail() {
+    const Vector2 &head = snake.body.front();
+
+    for (auto it = snake.body.begin() + 1; it != snake.body.end(); ++it) {
+        if (head.x == it->x && head.y == it->y) {
+            currentState = GameState::GameOver;
+            return true;
+        }
+    }
+    return false;
 }
 
 // Handling snake's direction based on user input
@@ -94,18 +111,18 @@ void Game::ResetGame() {
 }
 
 void Game::Update(Game &game) {
-    // Draw
-    Draw();
+    HandleUserInput(game);
 
     // Update
     if (GetSnake().EventTriggered(0.2)) {
         snake.Update(); // Update the snake's position
     }
 
-    HandleUserInput(game);
+    // Check for collision which might end the game
+    if (CheckCollisionWithBoundaries() || CheckCollisionWithTail()) {
+        currentState = GameState::GameOver;
+        return; // Stop further update if game is over
+    }
 
     CheckCollisionWithFood();
-
-    CheckCollisionWithBoundaries();
-
 }

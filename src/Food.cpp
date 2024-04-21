@@ -14,8 +14,8 @@ Food::~Food() {
 }
 
 void Food::Draw() const {
-    DrawTexture(texture, static_cast<int>(position.x * static_cast<float>(Config::cellSize)),
-                static_cast<int>(position.y * static_cast<float>(Config::cellSize)), Config::darkGreen);
+    DrawTexture(texture, static_cast<int>(Config::offSet + position.x * static_cast<float>(Config::cellSize)),
+                static_cast<int>(Config::offSet + position.y * static_cast<float>(Config::cellSize)), Config::darkGreen);
 }
 
 Vector2 Food::GenerateRandomPos() {

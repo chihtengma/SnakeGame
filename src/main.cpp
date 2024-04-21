@@ -9,7 +9,8 @@
 int main() {
     // Initialization
     //--------------------------------------------------------------------------------------
-    InitWindow(Config::cellSize * Config::cellCount, Config::cellSize * Config::cellCount, "Retro Snake Game");
+    InitWindow(2 * Config::offSet + Config::cellSize * Config::cellCount, 2 * Config::offSet + Config::cellSize * Config::cellCount,
+               "Retro Snake Game");
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
@@ -18,6 +19,7 @@ int main() {
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        game.Draw();
         game.Update(game);
     }
     return 0;
