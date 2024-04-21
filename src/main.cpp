@@ -20,7 +20,11 @@ int main() {
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         game.Draw();
-        game.Update(game);
+        game.HandleUserInput(game);
+
+        if (game.getCurrentState() != GameState::GameOver) {
+            game.Update();
+        }
     }
     return 0;
 }

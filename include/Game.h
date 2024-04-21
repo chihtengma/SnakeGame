@@ -1,6 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <chrono>
+#include <thread>
+
 #include "Snake.h"
 #include "Food.h"
 
@@ -17,7 +20,7 @@ public:
 
     void Draw();
 
-    void Update(Game &);
+    void Update();
 
     void ResetGame();
 
@@ -36,12 +39,22 @@ public:
 
     Food &GetFood() { return food; };
 
+    int &GetScore() { return score; };
+
+    int IncrementScore() { return ++score; };
+
+    void ResetScore();
+
     GameState getCurrentState() { return currentState; };
 
 private:
     Snake snake;
     Food food;
+    Sound eatSound;
+    Sound wallSound;
+    bool soundPlayed;
     GameState currentState = GameState::Playing;
+    int score = 0;
 };
 
 #endif //GAME_H
