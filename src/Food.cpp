@@ -1,5 +1,6 @@
 #include "../include/Food.h"
 #include "../include/Config.h"
+#include "../include/Game.h"
 
 Food::Food() {
     Image image = LoadImage("../assets/Graphics/food.png"); // Path to the food image
@@ -12,9 +13,9 @@ Food::~Food() {
     UnloadTexture(texture); // Ensure resources are cleaned up properly
 }
 
-void Food::Draw() {
-    DrawTexture(texture, static_cast<int>(position.x * static_cast<float>(Config::cellSize)),
-                static_cast<int>(position.y * static_cast<float>(Config::cellSize)), Config::darkGreen);
+void Food::Draw() const {
+    DrawTexture(texture, static_cast<int>(Config::offSet + position.x * static_cast<float>(Config::cellSize)),
+                static_cast<int>(Config::offSet + position.y * static_cast<float>(Config::cellSize)), Config::darkGreen);
 }
 
 Vector2 Food::GenerateRandomPos() {

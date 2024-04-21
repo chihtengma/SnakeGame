@@ -16,12 +16,13 @@ Snake::Snake() {
 Snake::~Snake() = default;
 
 void Snake::Draw() {
-    for (auto &i: body) {
+    for (auto const &i: body) {
         int x = static_cast<int>(i.x);
         int y = static_cast<int>(i.y);
 
-        Rectangle segment = Rectangle{static_cast<float>(x * Config::cellSize), static_cast<float>(y * Config::cellSize), static_cast<float>(Config::cellSize),
-                                      static_cast<float>(Config::cellSize)};
+        auto segment = Rectangle{static_cast<float>(Config::offSet + x * Config::cellSize),
+                                 static_cast<float>(Config::offSet + y * Config::cellSize), static_cast<float>(Config::cellSize),
+                                 static_cast<float>(Config::cellSize)};
         DrawRectangleRounded(segment, 0.5, 6, Config::darkGreen);
     }
 }
@@ -45,7 +46,7 @@ void Snake::Update() {
 // Function that change the snake's direction based on the input
 void Snake::ChangeDirection(Vector2 newDirection) {
     // Checks to prevent the snake from reversing into itself
-    if (body.size() > 1 && body[1].x  == body[0].x + newDirection.x && body[1].y == body[0].y + newDirection.y) {
+    if (body.size() > 1 && body[1].x == body[0].x + newDirection.x && body[1].y == body[0].y + newDirection.y) {
         // This new direction will make the snake reverse into itself
         return;
     }
