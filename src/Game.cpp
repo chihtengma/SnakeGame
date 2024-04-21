@@ -1,17 +1,28 @@
 #include "../include/Game.h"
 #include "../include/Config.h"
 
-Game::Game() : snake(), food() {
+Game::Game() : soundPlayed(false), snake(), food() {
+    InitAudioDevice();
+    eatSound = LoadSound("../assets/Sounds/eat.mp3");
+    wallSound = LoadSound("../assets/Sounds/wall.mp3");
     food.position = GenerateValidFoodPosition();
 }
 
-Game::~Game() = default;
+Game::~Game() {
+    UnloadSound(eatSound);
+    UnloadSound(wallSound);
+    CloseAudioDevice();
+}
 
 void Game::Draw() {
     BeginDrawing();
     ClearBackground(Config::green);
-    DrawRectangleLinesEx(Rectangle{(float)Config::offSet - 5, (float)Config::offSet - 5, (float)Config::cellSize * Config::cellCount + 10,
-                                   (float)Config::cellSize * Config::cellCount + 10}, 5, Config::darkGreen);
+    DrawRectangleLinesEx(
+            Rectangle{(float) Config::offSet - 5, (float) Config::offSet - 5, (float) Config::cellSize * Config::cellCount + 10,
+                      (float) Config::cellSize * Config::cellCount + 10}, 5, Config::darkGreen);
+    DrawText("Retro Snake", Config::offSet - 5, 30, 40, Config::darkGreen);
+    std::string scoreText = "Score: " + std::to_string(GetScore());
+    DrawText(scoreText.c_str(), Config::offSet + 720, 30, 40, Config::darkGreen);
 
     if (currentState == GameState::Playing) {
         snake.Draw();
@@ -53,6 +64,8 @@ void Game::CheckCollisionWithFood() {
         // 1. Grow the snake by adding a new segment to its tail
         Vector2 newSegment = snake.body.back(); // copy the last segment;
         snake.body.push_back(newSegment);
+        IncrementScore();
+        PlaySound(eatSound);
 
         // 2. Generate a new position for the food
         food.position = GenerateValidFoodPosition();
@@ -108,21 +121,29 @@ void Game::ResetGame() {
     snake = Snake();
     food.position = food.GenerateRandomPos();
     currentState = GameState::Playing;
+    ResetScore();
+    soundPlayed = false;
 }
 
-void Game::Update(Game &game) {
-    HandleUserInput(game);
+void Game::ResetScore() {
+    score = 0;
+}
 
+void Game::Update() {
     // Update
     if (GetSnake().EventTriggered(0.2)) {
         snake.Update(); // Update the snake's position
     }
 
-    // Check for collision which might end the game
     if (CheckCollisionWithBoundaries() || CheckCollisionWithTail()) {
+        if (!soundPlayed) {
+            PlaySound(wallSound);
+            soundPlayed = true;
+        }
         currentState = GameState::GameOver;
-        return; // Stop further update if game is over
+        return; // Ensure no further processing happens after this
     }
+
 
     CheckCollisionWithFood();
 }
